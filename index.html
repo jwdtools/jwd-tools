@@ -106,25 +106,26 @@ button:disabled{opacity:.45;cursor:not-allowed}
    <div class="emoji">📚</div><h3>Merge PDF</h3><p>Combine multiple PDF files.</p>
    <button onclick="openTool('merge')">Open Tool</button>
   </article>
-  
   <article class="card" data-name="split pdf">
    <div class="emoji">✂️</div><h3>Split PDF</h3><p>Extract the first page as a PDF.</p>
    <button onclick="openTool('split')">Open Tool</button>
   </article>
-  
+  <article class="card" data-name="compress pdf">
+   <div class="emoji">📦</div><h3>Compress PDF</h3><p>PDF compression service coming soon.</p>
   compresspdf:`<h2>📦 Compress PDF</h2>
 <p class="note">Select a PDF to optimize it in your browser.</p>
 <input id="compressFile" type="file" accept="application/pdf">
 <button class="primary" onclick="compressPDF()">Optimize and Download</button>
 <p id="compressStatus" class="result"></p>`,
-  pdfword:`<h2>📝 PDF to Word</h2>
+pdfword:`<h2>📝 PDF to Word</h2>
 <p class="note">Extract selectable PDF text into an editable Word document. Scanned PDFs need OCR.</p>
 <input id="wordFile" type="file" accept="application/pdf">
 <button class="primary" onclick="pdfToWord()">Convert to Word</button>
 <p id="wordStatus" class="result"></p>`,
   </article>
-  </div>
+ </div>
  </section>
+
  <section class="category">
  <h2>🖼️ Image Tools</h2>
  <div class="grid">
