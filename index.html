@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JWD Tools - Free Online Tools</title>
+<meta name="description" content="JWD Tools offers free online text, PDF, image and productivity tools.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f8ff;color:#17233b}
+header{background:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px #0000000c}
+.logo{font-size:27px;font-weight:800;color:#1765db}
+.logo span{color:#17233b}
+nav a{margin-left:20px;text-decoration:none;color:#263650;font-weight:600}
+.hero{text-align:center;padding:65px 20px;background:linear-gradient(130deg,#125bd5,#653ce2);color:white}
+.hero h1{font-size:40px;margin-bottom:15px}
+.hero p{font-size:17px;margin-bottom:25px}
+.search{max-width:550px;margin:auto;display:flex;background:white;padding:6px;border-radius:10px}
+.search input{flex:1;min-width:0;border:0;outline:0;padding:13px;font-size:16px}
+.search button{background:#1765db;color:white;border:0;padding:12px 20px;border-radius:7px}
+section{padding:45px 7%}
+section h2{text-align:center;font-size:29px;margin-bottom:10px}
+.subtitle{text-align:center;color:#69758b;margin-bottom:30px}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.tool{background:white;padding:24px;border-radius:13px;border:1px solid #e5eaf3;transition:.2s}
+.tool:hover{transform:translateY(-4px);box-shadow:0 8px 22px #00000010}
+.tool .icon{font-size:34px;margin-bottom:13px}
+.tool h3{margin-bottom:9px}
+.tool p{font-size:14px;color:#6b7890;line-height:1.5}
+.tool a{display:inline-block;margin-top:16px;color:#1765db;text-decoration:none;font-weight:bold}
+.tool button{margin-top:14px;background:#1765db;color:white;border:0;padding:9px 15px;border-radius:7px;cursor:pointer}
+#wordbox{display:none;background:white;padding:25px;border-radius:12px;margin-top:25px}
+#wordbox textarea{width:100%;height:140px;padding:12px;border:1px solid #ccd5e3;border-radius:8px;font-size:15px}
+.stats{margin-top:12px;font-weight:bold;color:#1765db}
+footer{text-align:center;background:#14233e;color:white;padding:28px;margin-top:30px}
+@media(max-width:600px){.hero h1{font-size:30px}nav a{margin-left:8px;font-size:13px}header{padding:16px 4%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">JWD <span>Tools</span></div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#tools">All Tools</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>All Your Free Tools in One Place</h1>
+  <p>Simple, fast and free online tools for everyone.</p>
+  <div class="search">
+    <input id="search" placeholder="Search your favorite tool...">
+    <button onclick="filterTools()">Search</button>
+  </div>
+</div>
+
+<section id="tools">
+  <h2>Explore Our Free Tools</h2>
+  <p class="subtitle">Choose a tool and make your work easier.</p>
+
+  <div class="tools" id="toolGrid">
+
+    <div class="tool" data-name="text to speech voice audio">
+      <div class="icon">🔊</div>
+      <h3>Text to Speech</h3>
+      <p>Convert your written text into spoken voice.</p>
+      <button onclick="speakText()">Try Now</button>
+    </div>
+
+    <div class="tool" data-name="pdf merge combine">
+      <div class="icon">📄</div>
+      <h3>Merge PDF</h3>
+      <p>Combine multiple PDF files into one document.</p>
+      <a href="#tools">Coming Soon</a>
+    </div>
+
+    <div class="tool" data-name="pdf split">
+      <div class="icon">✂️</div>
+      <h3>Split PDF</h3>
+      <p>Separate PDF documents into smaller files.</p>
+      <a href="#tools">Coming Soon</a>
+    </div>
+
+    <div class="tool" data-name="pdf compress">
+      <div class="icon">📦</div>
+      <h3>Compress PDF</h3>
+      <p>Reduce the size of your PDF documents.</p>
+      <a href="#tools">Coming Soon</a>
+    </div>
+
+    <div class="tool" data-name="image compressor resize">
+      <div class="icon">🖼️</div>
+      <h3>Image Compressor</h3>
+      <p>Reduce image size quickly and easily.</p>
+      <a href="#tools">Coming Soon</a>
+    </div>
+
+    <div class="tool" data-name="image to pdf converter">
+      <div class="icon">📷</div>
+      <h3>Image to PDF</h3>
+      <p>Convert your images into PDF files.</p>
+      <a href="#tools">Coming Soon</a>
+    </div>
+
+    <div class="tool" data-name="qr code generator">
+      <div class="icon">🔳</div>
+      <h3>QR Code Generator</h3>
+      <p>Create QR codes for links and text.</p>
+      <a href="#tools">Coming Soon</a>
+    </div>
+
+    <div class="tool" data-name="word counter text">
+      <div class="icon">📝</div>
+      <h3>Word Counter</h3>
+      <p>Count words and characters in your text.</p>
+      <button onclick="showCounter()">Try Now</button>
+    </div>
+
+  </div>
+
+  <div id="wordbox">
+    <h3>Free Word Counter</h3>
+    <p style="margin:12px 0">Enter your text below:</p>
+    <textarea id="words" placeholder="Type or paste your text here..." oninput="countWords()"></textarea>
+    <div class="stats" id="stats">Words: 0 | Characters: 0</div>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About JWD Tools</h2>
+  <p class="subtitle">Our mission is to provide useful and easy-to-use free online tools for everyone.</p>
+</section>
+
+<footer>
+  <h3>JWD Tools</h3>
+  <p style="margin-top:10px">Free Online Tools for Everyone</p>
+  <p style="margin-top:10px">© 2026 JWD Tools. All rights reserved.</p>
+</footer>
+
+<script>
+function filterTools(){
+  const q=document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.tool').forEach(card=>{
+    card.style.display=card.dataset.name.includes(q)?"block":"none";
+  });
+}
+document.getElementById('search').addEventListener('input',filterTools);
+
+function speakText(){
+  const text=prompt("Enter text to speak:");
+  if(!text)return;
+  if(!('speechSynthesis' in window)){
+    alert("Text to Speech is not supported in this browser.");
+    return;
+  }
+  speechSynthesis.cancel();
+  const voice=new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(voice);
+}
+
+function showCounter(){
+  document.getElementById('wordbox').style.display='block';
+  document.getElementById('wordbox').scrollIntoView({behavior:'smooth'});
+}
+function countWords(){
+  const t=document.getElementById('words').value;
+  const w=t.trim()?t.trim().split(/\s+/).length:0;
+  document.getElementById('stats').textContent=
+  "Words: "+w+" | Characters: "+t.length;
+}
+</script>
+</body>
+</html>
