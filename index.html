@@ -7,6 +7,8 @@
 <meta name="theme-color" content="#155eef">
 <title>JWD Tools - Free Online Tools</title>
 <meta name="description" content="Free online PDF, image, text, audio and productivity tools.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <style>
@@ -110,11 +112,16 @@ button:disabled{opacity:.45;cursor:not-allowed}
   </article>
   <article class="card" data-name="compress pdf">
    <div class="emoji">📦</div><h3>Compress PDF</h3><p>PDF compression service coming soon.</p>
-   <button onclick="openTool('compresspdf')">Open Tool</button>
-  </article>
-  <article class="card" data-name="pdf to word converter">
-   <div class="emoji">📝</div><h3>PDF to Word</h3><p>Convert PDF text into editable Word files.</p>
-   <button onclick="openTool('pdfword')">Open Tool</button>
+  compresspdf:`<h2>📦 Compress PDF</h2>
+<p class="note">Select a PDF to optimize it in your browser.</p>
+<input id="compressFile" type="file" accept="application/pdf">
+<button class="primary" onclick="compressPDF()">Optimize and Download</button>
+<p id="compressStatus" class="result"></p>`,
+pdfword:`<h2>📝 PDF to Word</h2>
+<p class="note">Extract selectable PDF text into an editable Word document. Scanned PDFs need OCR.</p>
+<input id="wordFile" type="file" accept="application/pdf">
+<button class="primary" onclick="pdfToWord()">Convert to Word</button>
+<p id="wordStatus" class="result"></p>`,
   </article>
  </div>
  </section>
@@ -333,6 +340,94 @@ async function imageToPDF(){
   const page=pdf.addPage([im.width,im.height]);page.drawImage(im,{x:0,y:0,width:im.width,height:im.height});
   saveBlob(await pdf.save(),'image-to-pdf.pdf','application/pdf');
  }catch(e){alert('Please choose a JPG or PNG image.');}
+}
+ 
+async function compressPDF(){
+ const f=document.getElementById('compressFile').files[0];
+ const status=document.getElementById('compressStatus');
+ if(!f)return alert('Please select a PDF file.');
+ if(!window.PDFLib)return alert('PDF library did not load. Refresh the page.');
+ try{
+  status.textContent='Optimizing PDF...';
+  const doc=await PDFLib.PDFDocument.load(await f.arrayBuffer());
+  const bytes=await doc.save({useObjectStreams:true});
+  const blob=new Blob([bytes],{type:'application/pdf'});
+  const before=f.size,after=blob.size;
+  saveBlob(bytes,'jwd-optimized.pdf','application/pdf');
+  const change=((before-after)/before*100).toFixed(1);
+  status.textContent=after<before
+   ? `Original: ${(before/1024).toFixed(1)} KB. New size: ${(after/1024).toFixed(1)} KB. Reduced by ${change}%.`
+   : `PDF optimized, but its size did not decrease. Original: ${(before/1024).toFixed(1)} KB. New: ${(after/1024).toFixed(1)} KB.`;
+ }catch(e){
+  console.error(e);
+  status.textContent='Could not process this PDF. It may be damaged or password protected.';
+ }
+}
+
+function xmlEscape(value){
+ return String(value).replace(/[<>&'"]/g,c=>({
+  '<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','"':'&quot;'
+ })[c]);
+}
+
+async function pdfToWord(){
+ const f=document.getElementById('wordFile').files[0];
+ const status=document.getElementById('wordStatus');
+ if(!f)return alert('Please select a PDF file.');
+ if(!window.pdfjsLib || !window.JSZip){
+  return alert('Conversion libraries did not load. Refresh the page and try again.');
+ }
+ try{
+  status.textContent='Reading PDF pages...';
+  pdfjsLib.GlobalWorkerOptions.workerSrc=
+   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const pdf=await pdfjsLib.getDocument({
+   data:await f.arrayBuffer()
+  }).promise;
+
+  let paragraphs=[];
+  for(let i=1;i<=pdf.numPages;i++){
+   status.textContent=`Extracting page ${i} of ${pdf.numPages}...`;
+   const page=await pdf.getPage(i);
+   const data=await page.getTextContent();
+   const text=data.items.map(x=>x.str).join(' ').trim();
+   paragraphs.push(`<w:p><w:r><w:t xml:space="preserve">${xmlEscape(text)}</w:t></w:r></w:p>`);
+  }
+
+  const zip=new JSZip();
+  zip.file('[Content_Types].xml',
+   `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+   <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+   <Default Extension="xml" ContentType="application/xml"/>
+   <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+   </Types>`);
+
+  zip.folder('_rels').file('.rels',
+   `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+   </Relationships>`);
+
+  zip.folder('word').file('document.xml',
+   `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+   <w:body>${paragraphs.join('')}
+   <w:sectPr/></w:body></w:document>`);
+
+  const blob=await zip.generateAsync({type:'blob'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='jwd-converted.docx';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+  status.textContent='Word document downloaded successfully.';
+ }catch(e){
+  console.error(e);
+  status.textContent='Conversion failed. Please check the PDF and try again.';
+ }
 }
 function calculatePercent(){
  const p=Number(document.getElementById('percentValue').value),n=Number(document.getElementById('percentNumber').value);
