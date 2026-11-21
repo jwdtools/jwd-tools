@@ -3,173 +3,349 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#155eef">
 <title>JWD Tools - Free Online Tools</title>
-<meta name="description" content="JWD Tools offers free online text, PDF, image and productivity tools.">
+<meta name="description" content="Free online PDF, image, text, audio and productivity tools.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f8ff;color:#17233b}
-header{background:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px #0000000c}
-.logo{font-size:27px;font-weight:800;color:#1765db}
-.logo span{color:#17233b}
-nav a{margin-left:20px;text-decoration:none;color:#263650;font-weight:600}
-.hero{text-align:center;padding:65px 20px;background:linear-gradient(130deg,#125bd5,#653ce2);color:white}
-.hero h1{font-size:40px;margin-bottom:15px}
-.hero p{font-size:17px;margin-bottom:25px}
-.search{max-width:550px;margin:auto;display:flex;background:white;padding:6px;border-radius:10px}
-.search input{flex:1;min-width:0;border:0;outline:0;padding:13px;font-size:16px}
-.search button{background:#1765db;color:white;border:0;padding:12px 20px;border-radius:7px}
-section{padding:45px 7%}
-section h2{text-align:center;font-size:29px;margin-bottom:10px}
-.subtitle{text-align:center;color:#69758b;margin-bottom:30px}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.tool{background:white;padding:24px;border-radius:13px;border:1px solid #e5eaf3;transition:.2s}
-.tool:hover{transform:translateY(-4px);box-shadow:0 8px 22px #00000010}
-.tool .icon{font-size:34px;margin-bottom:13px}
-.tool h3{margin-bottom:9px}
-.tool p{font-size:14px;color:#6b7890;line-height:1.5}
-.tool a{display:inline-block;margin-top:16px;color:#1765db;text-decoration:none;font-weight:bold}
-.tool button{margin-top:14px;background:#1765db;color:white;border:0;padding:9px 15px;border-radius:7px;cursor:pointer}
-#wordbox{display:none;background:white;padding:25px;border-radius:12px;margin-top:25px}
-#wordbox textarea{width:100%;height:140px;padding:12px;border:1px solid #ccd5e3;border-radius:8px;font-size:15px}
-.stats{margin-top:12px;font-weight:bold;color:#1765db}
-footer{text-align:center;background:#14233e;color:white;padding:28px;margin-top:30px}
-@media(max-width:600px){.hero h1{font-size:30px}nav a{margin-left:8px;font-size:13px}header{padding:16px 4%}}
+:root{--blue:#155eef;--ink:#18243b;--muted:#68758c;--bg:#f5f7fc;--line:#e5eaf2}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:white;padding:17px 6%;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px #18243b0c;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:800;color:var(--blue)}
+.logo span{color:var(--ink)}
+nav a{color:var(--ink);text-decoration:none;margin-left:18px;font-weight:600;font-size:14px}
+.hero{padding:65px 18px;text-align:center;color:white;background:linear-gradient(120deg,#155eef,#6338d9)}
+.hero h1{font-size:clamp(30px,5vw,46px);margin:0 0 14px}
+.hero p{color:#e5edff;font-size:16px}
+.search{display:flex;max-width:570px;margin:25px auto 0;background:white;border-radius:10px;padding:5px}
+.search input{flex:1;min-width:0;padding:13px;border:0;outline:0;font-size:15px}
+.search button,.primary{background:var(--blue);color:white;border:0;padding:12px 19px;border-radius:8px;cursor:pointer;font-weight:700}
+.hero .search button{background:#172b55}
+main{max-width:1180px;margin:auto;padding:35px 20px}
+.section-title{text-align:center;margin:15px 0 25px}
+.section-title h2{font-size:28px;margin:0 0 8px}
+.section-title p{color:var(--muted)}
+.category{margin:36px 0}
+.category h2{font-size:21px;margin-bottom:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:white;border:1px solid var(--line);border-radius:13px;padding:20px;box-shadow:0 3px 12px #14213b08}
+.card .emoji{font-size:30px}
+.card h3{margin:12px 0 7px;font-size:17px}
+.card p{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}
+.card button{background:#edf3ff;color:var(--blue);border:0;border-radius:7px;padding:10px 13px;font-weight:700;cursor:pointer}
+.card button:hover{background:#dce8ff}
+.tag{font-size:10px;background:#fff3d8;color:#8a5a00;padding:4px 7px;border-radius:20px}
+.panel{display:none;background:white;border:1px solid var(--line);border-radius:14px;padding:23px;margin:25px 0;scroll-margin-top:90px}
+.panel.active{display:block}
+.panel h2{margin-top:0}
+.panel textarea,.panel input,.panel select{width:100%;padding:12px;border:1px solid #d7dfeb;border-radius:8px;font:inherit;margin:8px 0 12px}
+.panel textarea{min-height:130px;resize:vertical}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.secondary{background:#edf2fa;color:#24344e;border:0;border-radius:8px;padding:11px 15px;cursor:pointer;font-weight:600}
+.result{padding:12px;background:#f2f6ff;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.note{font-size:13px;color:var(--muted);line-height:1.6}
+#qrOutput{margin-top:15px}
+#qrOutput img{margin:auto}
+footer{text-align:center;background:#14233e;color:white;padding:30px 15px;margin-top:35px}
+footer p{color:#c6d3e8;font-size:13px}
+button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:600px){header{padding:14px 4%}nav a{margin-left:9px;font-size:12px}.hero{padding:48px 15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:14px}.card p{min-height:55px}}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">JWD <span>Tools</span></div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#tools">All Tools</a>
-    <a href="#about">About</a>
-  </nav>
+ <div class="logo">JWD <span>Tools</span></div>
+ <nav><a href="#">Home</a><a href="#alltools">All Tools</a><a href="#about">About</a></nav>
 </header>
 
-<div class="hero">
-  <h1>All Your Free Tools in One Place</h1>
-  <p>Simple, fast and free online tools for everyone.</p>
-  <div class="search">
-    <input id="search" placeholder="Search your favorite tool...">
-    <button onclick="filterTools()">Search</button>
-  </div>
-</div>
-
-<section id="tools">
-  <h2>Explore Our Free Tools</h2>
-  <p class="subtitle">Choose a tool and make your work easier.</p>
-
-  <div class="tools" id="toolGrid">
-
-    <div class="tool" data-name="text to speech voice audio">
-      <div class="icon">🔊</div>
-      <h3>Text to Speech</h3>
-      <p>Convert your written text into spoken voice.</p>
-      <button onclick="speakText()">Try Now</button>
-    </div>
-
-    <div class="tool" data-name="pdf merge combine">
-      <div class="icon">📄</div>
-      <h3>Merge PDF</h3>
-      <p>Combine multiple PDF files into one document.</p>
-      <a href="#tools">Coming Soon</a>
-    </div>
-
-    <div class="tool" data-name="pdf split">
-      <div class="icon">✂️</div>
-      <h3>Split PDF</h3>
-      <p>Separate PDF documents into smaller files.</p>
-      <a href="#tools">Coming Soon</a>
-    </div>
-
-    <div class="tool" data-name="pdf compress">
-      <div class="icon">📦</div>
-      <h3>Compress PDF</h3>
-      <p>Reduce the size of your PDF documents.</p>
-      <a href="#tools">Coming Soon</a>
-    </div>
-
-    <div class="tool" data-name="image compressor resize">
-      <div class="icon">🖼️</div>
-      <h3>Image Compressor</h3>
-      <p>Reduce image size quickly and easily.</p>
-      <a href="#tools">Coming Soon</a>
-    </div>
-
-    <div class="tool" data-name="image to pdf converter">
-      <div class="icon">📷</div>
-      <h3>Image to PDF</h3>
-      <p>Convert your images into PDF files.</p>
-      <a href="#tools">Coming Soon</a>
-    </div>
-
-    <div class="tool" data-name="qr code generator">
-      <div class="icon">🔳</div>
-      <h3>QR Code Generator</h3>
-      <p>Create QR codes for links and text.</p>
-      <a href="#tools">Coming Soon</a>
-    </div>
-
-    <div class="tool" data-name="word counter text">
-      <div class="icon">📝</div>
-      <h3>Word Counter</h3>
-      <p>Count words and characters in your text.</p>
-      <button onclick="showCounter()">Try Now</button>
-    </div>
-
-  </div>
-
-  <div id="wordbox">
-    <h3>Free Word Counter</h3>
-    <p style="margin:12px 0">Enter your text below:</p>
-    <textarea id="words" placeholder="Type or paste your text here..." oninput="countWords()"></textarea>
-    <div class="stats" id="stats">Words: 0 | Characters: 0</div>
-  </div>
+<section class="hero">
+ <h1>All Your Tools in One Place</h1>
+ <p>Free, simple and useful online tools for everyone.</p>
+ <div class="search">
+  <input id="searchBox" placeholder="Search tools..." oninput="searchTools()">
+  <button onclick="searchTools()">Search</button>
+ </div>
 </section>
 
-<section id="about">
+<main id="alltools">
+ <div class="section-title">
+  <h2>Explore JWD Tools</h2>
+  <p>Choose a tool to get started.</p>
+ </div>
+
+ <section class="category">
+ <h2>🔊 Audio Tools</h2>
+ <div class="grid">
+  <article class="card" data-name="text to speech ai voice generator">
+   <div class="emoji">🗣️</div><h3>Text to Speech</h3>
+   <p>Turn written text into spoken voice.</p>
+   <button onclick="openTool('tts')">Open Tool</button>
+  </article>
+  <article class="card" data-name="voice changer audio">
+   <div class="emoji">🎙️</div><h3>Voice Changer</h3>
+   <p>Change audio pitch and voice effects.</p>
+   <button onclick="openTool('voice')">Open Tool</button>
+  </article>
+  <article class="card" data-name="voice cloning clone">
+   <div class="emoji">🎧</div><h3>Voice Cloning</h3>
+   <p>Create an authorized voice clone.</p>
+   <button onclick="openTool('clone')">Open Tool</button>
+  </article>
+ </div>
+ </section>
+
+ <section class="category">
+ <h2>📄 PDF Tools</h2>
+ <div class="grid">
+  <article class="card" data-name="merge pdf combine">
+   <div class="emoji">📚</div><h3>Merge PDF</h3><p>Combine multiple PDF files.</p>
+   <button onclick="openTool('merge')">Open Tool</button>
+  </article>
+  <article class="card" data-name="split pdf">
+   <div class="emoji">✂️</div><h3>Split PDF</h3><p>Extract the first page as a PDF.</p>
+   <button onclick="openTool('split')">Open Tool</button>
+  </article>
+  <article class="card" data-name="compress pdf">
+   <div class="emoji">📦</div><h3>Compress PDF</h3><p>PDF compression service coming soon.</p>
+   <button onclick="openTool('compresspdf')">Open Tool</button>
+  </article>
+  <article class="card" data-name="pdf to word converter">
+   <div class="emoji">📝</div><h3>PDF to Word</h3><p>Convert PDF text into editable Word files.</p>
+   <button onclick="openTool('pdfword')">Open Tool</button>
+  </article>
+ </div>
+ </section>
+
+ <section class="category">
+ <h2>🖼️ Image Tools</h2>
+ <div class="grid">
+  <article class="card" data-name="image compressor compress">
+   <div class="emoji">🗜️</div><h3>Image Compressor</h3><p>Reduce image file size in your browser.</p>
+   <button onclick="openTool('image')">Open Tool</button>
+  </article>
+  <article class="card" data-name="image resize">
+   <div class="emoji">📐</div><h3>Image Resizer</h3><p>Resize an image to your desired dimensions.</p>
+   <button onclick="openTool('resize')">Open Tool</button>
+  </article>
+  <article class="card" data-name="image to pdf">
+   <div class="emoji">📷</div><h3>Image to PDF</h3><p>Convert an image into a PDF document.</p>
+   <button onclick="openTool('imgpdf')">Open Tool</button>
+  </article>
+ </div>
+ </section>
+
+ <section class="category">
+ <h2>✍️ Text Tools</h2>
+ <div class="grid">
+  <article class="card" data-name="word counter character count">
+   <div class="emoji">🔢</div><h3>Word Counter</h3><p>Count words, characters and sentences.</p>
+   <button onclick="openTool('counter')">Open Tool</button>
+  </article>
+  <article class="card" data-name="case converter uppercase lowercase">
+   <div class="emoji">🔠</div><h3>Case Converter</h3><p>Convert text to uppercase or lowercase.</p>
+   <button onclick="openTool('case')">Open Tool</button>
+  </article>
+ </div>
+ </section>
+
+ <section class="category">
+ <h2>🧰 Utility Tools</h2>
+ <div class="grid">
+  <article class="card" data-name="qr code generator">
+   <div class="emoji">🔳</div><h3>QR Code Generator</h3><p>Create and download a QR code.</p>
+   <button onclick="openTool('qr')">Open Tool</button>
+  </article>
+  <article class="card" data-name="percentage calculator">
+   <div class="emoji">🧮</div><h3>Percentage Calculator</h3><p>Calculate a percentage of any number.</p>
+   <button onclick="openTool('percent')">Open Tool</button>
+  </article>
+  <article class="card" data-name="age calculator">
+   <div class="emoji">🎂</div><h3>Age Calculator</h3><p>Calculate your age from date of birth.</p>
+   <button onclick="openTool('age')">Open Tool</button>
+  </article>
+ </div>
+ </section>
+
+ <section id="toolPanel" class="panel">
+  <div class="actions"><button class="secondary" onclick="closeTool()">← Back to tools</button></div>
+  <div id="toolContent"></div>
+ </section>
+
+ <section id="about" class="section-title">
   <h2>About JWD Tools</h2>
-  <p class="subtitle">Our mission is to provide useful and easy-to-use free online tools for everyone.</p>
-</section>
+  <p>Our mission is to make useful online tools easy and accessible for everyone.</p>
+ </section>
+</main>
 
 <footer>
-  <h3>JWD Tools</h3>
-  <p style="margin-top:10px">Free Online Tools for Everyone</p>
-  <p style="margin-top:10px">© 2026 JWD Tools. All rights reserved.</p>
+ <h3>JWD Tools</h3>
+ <p>Free Online Tools for Everyone</p>
+ <p>© 2026 JWD Tools. All rights reserved.</p>
 </footer>
 
 <script>
-function filterTools(){
-  const q=document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('.tool').forEach(card=>{
-    card.style.display=card.dataset.name.includes(q)?"block":"none";
+const panel=document.getElementById('toolPanel');
+const content=document.getElementById('toolContent');
+
+function openTool(id){
+ panel.classList.add('active');
+ const views={
+ tts:`<h2>🗣️ Text to Speech</h2>
+ <p class="note">Type text, choose an available browser voice and listen. This basic version uses your device's speech engine; it does not create MP3 files.</p>
+ <textarea id="ttsText" placeholder="Type your text here..."></textarea>
+ <label>Voice</label><select id="ttsVoice"></select>
+ <label>Speed</label><input id="ttsRate" type="range" min="0.5" max="2" step="0.1" value="1">
+ <div class="actions"><button class="primary" onclick="speak()">▶ Play Voice</button><button class="secondary" onclick="speechSynthesis.cancel()">Stop</button></div>
+ <p class="note">AI voices and MP3 downloads will be enabled after a secure AI service is connected.</p>`,
+ voice:`<h2>🎙️ Voice Changer</h2><p class="note">A full voice changer needs an audio-processing engine. This feature is not connected yet. We will add upload, effects and downloadable processed audio in a later update.</p>`,
+ clone:`<h2>🎧 Voice Cloning</h2><p class="note">Voice cloning requires a secure AI provider and permission from the voice owner. This feature is not connected yet.</p>`,
+ merge:`<h2>📚 Merge PDF</h2><p>Select two or more PDF files to combine them.</p><input id="mergeFiles" type="file" accept="application/pdf" multiple><button class="primary" onclick="mergePDF()">Merge and Download</button><p id="mergeStatus" class="note"></p>`,
+ split:`<h2>✂️ Split PDF</h2><p class="note">This starter version extracts the first page of a PDF.</p><input id="splitFile" type="file" accept="application/pdf"><button class="primary" onclick="splitPDF()">Extract First Page</button><p id="splitStatus" class="note"></p>`,
+ compresspdf:`<h2>📦 Compress PDF</h2><p class="note">PDF compression is not connected yet. We will add a proper compression engine in a later update.</p>`,
+ pdfword:`<h2>📝 PDF to Word</h2><p class="note">Editable Word conversion needs a document conversion engine. This feature is coming soon.</p>`,
+ image:`<h2>🗜️ Image Compressor</h2><p>Select an image. Compression happens in your browser.</p><input id="imageFile" type="file" accept="image/*"><label>Image quality</label><input id="imageQuality" type="range" min="0.2" max="0.95" step="0.05" value="0.7"><button class="primary" onclick="compressImage()">Compress and Download</button><p id="imageStatus" class="note"></p>`,
+ resize:`<h2>📐 Image Resizer</h2><input id="resizeFile" type="file" accept="image/*"><label>Width (pixels)</label><input id="resizeWidth" type="number" value="800"><label>Height (pixels)</label><input id="resizeHeight" type="number" value="600"><button class="primary" onclick="resizeImage()">Resize and Download</button>`,
+ imgpdf:`<h2>📷 Image to PDF</h2><input id="imgPdfFile" type="file" accept="image/*"><button class="primary" onclick="imageToPDF()">Convert and Download PDF</button>`,
+ counter:`<h2>🔢 Word Counter</h2><textarea id="countText" oninput="updateCount()" placeholder="Enter or paste your text..."></textarea><div class="result" id="countResult">Words: 0 | Characters: 0 | Sentences: 0</div>`,
+ case:`<h2>🔠 Case Converter</h2><textarea id="caseText" placeholder="Enter your text..."></textarea><div class="actions"><button class="primary" onclick="convertCase('upper')">UPPERCASE</button><button class="primary" onclick="convertCase('lower')">lowercase</button><button class="primary" onclick="convertCase('title')">Title Case</button><button class="secondary" onclick="copyCase()">Copy Text</button></div>`,
+ qr:`<h2>🔳 QR Code Generator</h2><input id="qrText" placeholder="Enter text or website URL"><button class="primary" onclick="makeQR()">Generate QR Code</button><div id="qrOutput"></div><button class="secondary" onclick="downloadQR()">Download QR Image</button>`,
+ percent:`<h2>🧮 Percentage Calculator</h2><label>Percentage (%)</label><input id="percentValue" type="number" placeholder="e.g. 20"><label>Number</label><input id="percentNumber" type="number" placeholder="e.g. 500"><button class="primary" onclick="calculatePercent()">Calculate</button><div id="percentResult" class="result"></div>`,
+ age:`<h2>🎂 Age Calculator</h2><label>Date of birth</label><input id="birthDate" type="date"><button class="primary" onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div>`
+ };
+ content.innerHTML=views[id]||'<p>Tool not found.</p>';
+ panel.scrollIntoView({behavior:'smooth'});
+ if(id==='tts')loadVoices();
+}
+function closeTool(){panel.classList.remove('active');}
+function searchTools(){
+ const q=document.getElementById('searchBox').value.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.name.includes(q)?'':'none');
+ document.querySelectorAll('.category').forEach(s=>{
+  s.style.display=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none')?'':'none';
+ });
+}
+function loadVoices(){
+ const select=document.getElementById('ttsVoice');
+ function fill(){
+  select.innerHTML='';
+  speechSynthesis.getVoices().forEach((v,i)=>{
+   const o=document.createElement('option');o.value=i;o.textContent=v.name+' ('+v.lang+')';select.appendChild(o);
   });
+ }
+ fill();speechSynthesis.onvoiceschanged=fill;
 }
-document.getElementById('search').addEventListener('input',filterTools);
-
-function speakText(){
-  const text=prompt("Enter text to speak:");
-  if(!text)return;
-  if(!('speechSynthesis' in window)){
-    alert("Text to Speech is not supported in this browser.");
-    return;
+function speak(){
+ const text=document.getElementById('ttsText').value.trim();
+ if(!text)return alert('Please enter some text.');
+ if(!('speechSynthesis' in window))return alert('Speech is not supported in this browser.');
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text);
+ const v=speechSynthesis.getVoices()[Number(document.getElementById('ttsVoice').value)];
+ if(v)u.voice=v;
+ u.rate=Number(document.getElementById('ttsRate').value);
+ speechSynthesis.speak(u);
+}
+function updateCount(){
+ const t=document.getElementById('countText').value;
+ const words=t.trim()?t.trim().split(/\s+/).length:0;
+ const sentences=t.trim()?t.trim().split(/[.!?]+/).filter(x=>x.trim()).length:0;
+ document.getElementById('countResult').textContent=`Words: ${words} | Characters: ${t.length} | Sentences: ${sentences}`;
+}
+function convertCase(type){
+ const el=document.getElementById('caseText');let t=el.value;
+ if(type==='upper')t=t.toUpperCase();
+ if(type==='lower')t=t.toLowerCase();
+ if(type==='title')t=t.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
+ el.value=t;
+}
+function copyCase(){navigator.clipboard.writeText(document.getElementById('caseText').value).then(()=>alert('Text copied!'));}
+function makeQR(){
+ const t=document.getElementById('qrText').value.trim();
+ if(!t)return alert('Enter text or a URL first.');
+ const out=document.getElementById('qrOutput');out.innerHTML='';
+ if(!window.QRCode)return alert('QR library did not load. Check your internet connection.');
+ new QRCode(out,{text:t,width:220,height:220});
+}
+function downloadQR(){
+ const img=document.querySelector('#qrOutput img');
+ const canvas=document.querySelector('#qrOutput canvas');
+ const url=img?img.src:(canvas?canvas.toDataURL('image/png'):null);
+ if(!url)return alert('Generate a QR code first.');
+ const a=document.createElement('a');a.href=url;a.download='jwd-qr-code.png';a.click();
+}
+async function mergePDF(){
+ const files=[...document.getElementById('mergeFiles').files];
+ if(files.length<2)return alert('Choose at least two PDF files.');
+ try{
+  const merged=await PDFLib.PDFDocument.create();
+  for(const f of files){
+   const doc=await PDFLib.PDFDocument.load(await f.arrayBuffer());
+   const pages=await merged.copyPages(doc,doc.getPageIndices());
+   pages.forEach(p=>merged.addPage(p));
   }
-  speechSynthesis.cancel();
-  const voice=new SpeechSynthesisUtterance(text);
-  speechSynthesis.speak(voice);
+  saveBlob(await merged.save(),'merged.pdf','application/pdf');
+  document.getElementById('mergeStatus').textContent='Your merged PDF has been downloaded.';
+ }catch(e){alert('Could not merge these files. Please check they are valid PDFs.');}
 }
-
-function showCounter(){
-  document.getElementById('wordbox').style.display='block';
-  document.getElementById('wordbox').scrollIntoView({behavior:'smooth'});
+async function splitPDF(){
+ const f=document.getElementById('splitFile').files[0];if(!f)return alert('Choose a PDF file.');
+ try{
+  const src=await PDFLib.PDFDocument.load(await f.arrayBuffer());
+  if(!src.getPageCount())return alert('This PDF has no pages.');
+  const out=await PDFLib.PDFDocument.create();
+  const [page]=await out.copyPages(src,[0]);out.addPage(page);
+  saveBlob(await out.save(),'first-page.pdf','application/pdf');
+  document.getElementById('splitStatus').textContent='First page downloaded.';
+ }catch(e){alert('Could not read this PDF.');}
 }
-function countWords(){
-  const t=document.getElementById('words').value;
-  const w=t.trim()?t.trim().split(/\s+/).length:0;
-  document.getElementById('stats').textContent=
-  "Words: "+w+" | Characters: "+t.length;
+function saveBlob(data,name,type){
+ const blob=new Blob([data],{type}),url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+function loadImage(file){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=URL.createObjectURL(file);});}
+async function compressImage(){
+ const f=document.getElementById('imageFile').files[0];if(!f)return alert('Choose an image.');
+ try{
+  const im=await loadImage(f),c=document.createElement('canvas');c.width=im.width;c.height=im.height;
+  c.getContext('2d').drawImage(im,0,0);
+  c.toBlob(b=>{if(!b)return alert('Could not compress this image.');saveBlob(b,'jwd-compressed.jpg','image/jpeg');document.getElementById('imageStatus').textContent=`Original: ${(f.size/1024).toFixed(1)} KB. Compressed: ${(b.size/1024).toFixed(1)} KB.`;},'image/jpeg',Number(document.getElementById('imageQuality').value));
+ }catch(e){alert('Could not open this image.');}
+}
+async function resizeImage(){
+ const f=document.getElementById('resizeFile').files[0];if(!f)return alert('Choose an image.');
+ const w=Number(document.getElementById('resizeWidth').value),h=Number(document.getElementById('resizeHeight').value);
+ if(w<1||h<1||w>8000||h>8000)return alert('Enter dimensions between 1 and 8000.');
+ try{
+  const im=await loadImage(f),c=document.createElement('canvas');c.width=w;c.height=h;
+  c.getContext('2d').drawImage(im,0,0,w,h);
+  c.toBlob(b=>saveBlob(b,'jwd-resized.jpg','image/jpeg'),'image/jpeg',.9);
+ }catch(e){alert('Could not resize image.');}
+}
+async function imageToPDF(){
+ const f=document.getElementById('imgPdfFile').files[0];if(!f)return alert('Choose an image.');
+ try{
+  const bytes=await f.arrayBuffer(),pdf=await PDFLib.PDFDocument.create();
+  const im=f.type==='image/png'?await pdf.embedPng(bytes):await pdf.embedJpg(bytes);
+  const page=pdf.addPage([im.width,im.height]);page.drawImage(im,{x:0,y:0,width:im.width,height:im.height});
+  saveBlob(await pdf.save(),'image-to-pdf.pdf','application/pdf');
+ }catch(e){alert('Please choose a JPG or PNG image.');}
+}
+function calculatePercent(){
+ const p=Number(document.getElementById('percentValue').value),n=Number(document.getElementById('percentNumber').value);
+ if(!Number.isFinite(p)||!Number.isFinite(n))return alert('Enter both numbers.');
+ document.getElementById('percentResult').textContent=`Result: ${(p*n/100).toFixed(2)}`;
+}
+function calculateAge(){
+ const d=new Date(document.getElementById('birthDate').value+'T00:00:00');
+ if(isNaN(d.getTime())||d>new Date())return alert('Enter a valid date of birth.');
+ const now=new Date();let years=now.getFullYear()-d.getFullYear(),months=now.getMonth()-d.getMonth(),days=now.getDate()-d.getDate();
+ if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
+ if(months<0){years--;months+=12;}
+ document.getElementById('ageResult').textContent=`Age: ${years} years, ${months} months and ${days} days.`;
 }
 </script>
 </body>
