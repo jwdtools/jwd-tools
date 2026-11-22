@@ -5,46 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#155eef">
 <title>JWD Tools - Free Online Tools</title>
-<meta name="description" content="Free online PDF, image, text, audio and productivity tools.">
+<meta name="description" content="Free online PDF, image, audio, text and productivity tools.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
 <style>
-:root{--blue:#155eef;--ink:#18243b;--muted:#68758c;--bg:#f5f7fc;--line:#e5eaf2}
+:root{--blue:#2458e8;--purple:#6b45d9;--ink:#18243b;--muted:#68758c;--bg:#f4f6fb;--line:#e5eaf2}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:white;padding:17px 6%;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px #18243b0c;position:sticky;top:0;z-index:5}
-.logo{font-size:25px;font-weight:800;color:var(--blue)}.logo span{color:var(--ink)}
-nav a{color:var(--ink);text-decoration:none;margin-left:18px;font-weight:600;font-size:14px}
-.hero{padding:65px 18px;text-align:center;color:white;background:linear-gradient(120deg,#155eef,#6338d9)}
-.hero h1{font-size:clamp(30px,5vw,46px);margin:0 0 14px}.hero p{color:#e5edff;font-size:16px}
-.search{display:flex;max-width:570px;margin:25px auto 0;background:white;border-radius:10px;padding:5px}
-.search input{flex:1;min-width:0;padding:13px;border:0;outline:0;font-size:15px}
-.search button,.primary{background:var(--blue);color:white;border:0;padding:12px 19px;border-radius:8px;cursor:pointer;font-weight:700}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#fff;padding:16px max(5%,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 2px 14px #18243b0d;position:sticky;top:0;z-index:10}
+.logo{font-size:25px;font-weight:900;letter-spacing:-.7px;color:var(--blue);white-space:nowrap}.logo span{color:var(--ink)}
+nav{display:flex;gap:22px}nav a{color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}
+.hero{padding:66px 18px 58px;text-align:center;color:white;background:linear-gradient(125deg,#174fcf,#6542d4)}
+.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 13px;letter-spacing:-1px}.hero p{color:#e8edff;font-size:16px;margin:0}
+.search{display:flex;max-width:580px;margin:27px auto 0;background:white;border-radius:12px;padding:5px;box-shadow:0 10px 30px #14213b22}
+.search input{flex:1;min-width:0;padding:13px;border:0;outline:0;font-size:15px;margin:0}
+.search button,.primary{background:var(--blue);color:white;border:0;padding:12px 19px;border-radius:9px;cursor:pointer;font-weight:800}
 .hero .search button{background:#172b55}
-main{max-width:1180px;margin:auto;padding:35px 20px}
-.section-title{text-align:center;margin:15px 0 25px}.section-title h2{font-size:28px;margin:0 0 8px}.section-title p{color:var(--muted)}
-.category{margin:36px 0}.category h2{font-size:21px;margin-bottom:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.card{background:white;border:1px solid var(--line);border-radius:13px;padding:20px;box-shadow:0 3px 12px #14213b08}
-.card .emoji{font-size:30px}.card h3{margin:12px 0 7px;font-size:17px}
-.card p{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}
-.card button{background:#edf3ff;color:var(--blue);border:0;border-radius:7px;padding:10px 13px;font-weight:700;cursor:pointer}
+main{max-width:1180px;margin:auto;padding:34px 20px 45px}
+.section-title{text-align:center;margin:12px 0 30px}.section-title h2{font-size:28px;margin:0 0 8px}.section-title p{color:var(--muted);margin:0}
+.category{margin:35px 0 42px}.category-heading{display:flex;align-items:center;gap:10px;margin:0 0 17px;font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:21px;box-shadow:0 4px 16px #14213b08;display:flex;flex-direction:column;min-height:215px;transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 26px #14213b12}
+.card .emoji{width:48px;height:48px;border-radius:13px;background:#eef3ff;display:grid;place-items:center;font-size:26px}
+.card h3{margin:14px 0 7px;font-size:17px}.card p{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 17px;flex:1}
+.card button{align-self:flex-start;background:#edf3ff;color:var(--blue);border:0;border-radius:8px;padding:10px 15px;font-weight:800;cursor:pointer}
 .card button:hover{background:#dce8ff}
-.panel{display:none;background:white;border:1px solid var(--line);border-radius:14px;padding:23px;margin:25px 0;scroll-margin-top:90px}
-.panel.active{display:block}.panel h2{margin-top:0}
-.panel textarea,.panel input,.panel select{width:100%;padding:12px;border:1px solid #d7dfeb;border-radius:8px;font:inherit;margin:8px 0 12px}
+.panel{display:none;background:white;border:1px solid var(--line);border-radius:16px;padding:25px;margin:25px 0;scroll-margin-top:90px;box-shadow:0 5px 20px #14213b08}
+.panel.active{display:block}.panel h2{margin:0 0 10px}.panel textarea,.panel input:not([type=file]):not([type=range]),.panel select{width:100%;padding:12px;border:1px solid #d7dfeb;border-radius:9px;font:inherit;margin:8px 0 13px;background:#fff}
+.panel input[type=file]{display:block;margin:12px 0 18px;max-width:100%}
 .panel textarea{min-height:130px;resize:vertical}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
-.secondary{background:#edf2fa;color:#24344e;border:0;border-radius:8px;padding:11px 15px;cursor:pointer;font-weight:600}
-.result{padding:12px;background:#f2f6ff;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.panel label{font-size:14px;font-weight:700;display:block;margin-top:10px}
+.panel input[type=range]{width:100%;margin:10px 0 15px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.secondary{background:#edf2fa;color:#24344e;border:0;border-radius:9px;padding:11px 15px;cursor:pointer;font-weight:700}
+.result{padding:13px;background:#f2f6ff;border:1px solid #e1eaff;border-radius:10px;margin-top:13px;overflow-wrap:anywhere}
 .note{font-size:13px;color:var(--muted);line-height:1.6}
 #qrOutput{margin-top:15px}#qrOutput img{margin:auto}
-footer{text-align:center;background:#14233e;color:white;padding:30px 15px;margin-top:35px}
+footer{text-align:center;background:#14233e;color:white;padding:30px 15px;margin-top:25px}
 footer p{color:#c6d3e8;font-size:13px}
 button:disabled{opacity:.45;cursor:not-allowed}
-@media(max-width:600px){header{padding:14px 4%}nav a{margin-left:9px;font-size:12px}.hero{padding:48px 15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:14px}.card p{min-height:55px}}
+@media(max-width:650px){header{padding:13px 4%;flex-wrap:wrap}nav{gap:13px}nav a{font-size:12px}.hero{padding:48px 15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:14px;min-height:210px}.card p{font-size:12px}.card h3{font-size:15px}.panel{padding:17px}}
+@media(max-width:380px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -52,68 +57,69 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <section class="hero"><h1>All Your Tools in One Place</h1><p>Free, simple and useful online tools for everyone.</p><div class="search"><input id="searchBox" placeholder="Search tools..." oninput="searchTools()"><button onclick="searchTools()">Search</button></div></section>
 <main id="alltools">
 <div class="section-title"><h2>Explore JWD Tools</h2><p>Choose a tool to get started.</p></div>
-<section class="category"><h2>🔊 Audio Tools</h2><div class="grid">
-<article class="card" data-name="text to speech ai voice generator"><div class="emoji">🗣️</div><h3>Text to Speech</h3><p>Turn written text into spoken voice.</p><button onclick="openTool('tts')">Open Tool</button></article>
-<article class="card" data-name="voice changer audio"><div class="emoji">🎙️</div><h3>Voice Changer</h3><p>Change audio pitch and add voice effects.</p><button onclick="openTool('voice')">Open Tool</button></article>
-<article class="card" data-name="youtube thumbnail downloader">
-<div class="emoji">📸</div>
-<h3>YouTube Thumbnail Downloader</h3>
-<p>Download YouTube video thumbnails in HD quality for free.</p>
-<button onclick="openTool('thumbnail')">Open Tool</button>
-</article>
-<section class="category"><h2>📄 PDF Tools</h2><div class="grid">
-<article class="card" data-name="merge pdf combine"><div class="emoji">📚</div><h3>Merge PDF</h3><p>Combine multiple PDF files.</p><button onclick="openTool('merge')">Open Tool</button></article>
-<article class="card" data-name="split pdf"><div class="emoji">✂️</div><h3>Split PDF</h3><p>Extract the first page as a PDF.</p><button onclick="openTool('split')">Open Tool</button></article>
+
+<section class="category"><h2 class="category-heading">🔊 Audio Tools</h2><div class="grid">
+<article class="card" data-name="text to speech ai voice generator"><div class="emoji">🗣️</div><h3>Text to Speech</h3><p>Turn written text into spoken voice using your browser.</p><button onclick="openTool('tts')">Open Tool</button></article>
+<article class="card" data-name="voice changer audio effects"><div class="emoji">🎙️</div><h3>Voice Changer</h3><p>Change audio pitch and add fun voice effects.</p><button onclick="openTool('voice')">Open Tool</button></article>
+</div></section>
+
+<section class="category"><h2 class="category-heading">📸 YouTube Tools</h2><div class="grid">
+<article class="card" data-name="youtube thumbnail downloader"><div class="emoji">📸</div><h3>YouTube Thumbnail Downloader</h3><p>Preview and open a YouTube video's thumbnail in HD quality.</p><button onclick="openTool('thumbnail')">Open Tool</button></article>
+</div></section>
+
+<section class="category"><h2 class="category-heading">📄 PDF Tools</h2><div class="grid">
+<article class="card" data-name="merge pdf combine"><div class="emoji">📚</div><h3>Merge PDF</h3><p>Combine multiple PDF files into one document.</p><button onclick="openTool('merge')">Open Tool</button></article>
+<article class="card" data-name="split pdf"><div class="emoji">✂️</div><h3>Split PDF</h3><p>Extract the first page of a PDF file.</p><button onclick="openTool('split')">Open Tool</button></article>
 <article class="card" data-name="compress pdf"><div class="emoji">📦</div><h3>Compress PDF</h3><p>Reduce PDF size by optimizing page images.</p><button onclick="openTool('compresspdf')">Open Tool</button></article>
-<article class="card" data-name="pdf to word converter"><div class="emoji">📝</div><h3>PDF to Word</h3><p>Extract PDF text into an editable Word document.</p><button onclick="openTool('pdfword')">Open Tool</button></article>
+<article class="card" data-name="pdf to word converter"><div class="emoji">📝</div><h3>PDF to Word</h3><p>Extract selectable PDF text into an editable Word file.</p><button onclick="openTool('pdfword')">Open Tool</button></article>
 </div></section>
-<section class="category"><h2>🖼️ Image Tools</h2><div class="grid">
+
+<section class="category"><h2 class="category-heading">🖼️ Image Tools</h2><div class="grid">
 <article class="card" data-name="image compressor compress"><div class="emoji">🗜️</div><h3>Image Compressor</h3><p>Reduce image file size in your browser.</p><button onclick="openTool('image')">Open Tool</button></article>
-<article class="card" data-name="image resize"><div class="emoji">📐</div><h3>Image Resizer</h3><p>Resize an image to your desired dimensions.</p><button onclick="openTool('resize')">Open Tool</button></article>
-<article class="card" data-name="image to pdf"><div class="emoji">📷</div><h3>Image to PDF</h3><p>Convert a JPG or PNG image into PDF.</p><button onclick="openTool('imgpdf')">Open Tool</button></article>
+<article class="card" data-name="image resize resizer"><div class="emoji">📐</div><h3>Image Resizer</h3><p>Resize an image to your desired dimensions.</p><button onclick="openTool('resize')">Open Tool</button></article>
+<article class="card" data-name="image to pdf"><div class="emoji">📷</div><h3>Image to PDF</h3><p>Convert a JPG or PNG image into a PDF.</p><button onclick="openTool('imgpdf')">Open Tool</button></article>
 </div></section>
-<section class="category"><h2>✍️ Text Tools</h2><div class="grid">
+
+<section class="category"><h2 class="category-heading">✍️ Text Tools</h2><div class="grid">
 <article class="card" data-name="word counter character count"><div class="emoji">🔢</div><h3>Word Counter</h3><p>Count words, characters and sentences.</p><button onclick="openTool('counter')">Open Tool</button></article>
 <article class="card" data-name="case converter uppercase lowercase"><div class="emoji">🔠</div><h3>Case Converter</h3><p>Convert text to uppercase, lowercase or title case.</p><button onclick="openTool('case')">Open Tool</button></article>
 </div></section>
-<section class="category"><h2>🧰 Utility Tools</h2><div class="grid">
-<article class="card" data-name="qr code generator"><div class="emoji">🔳</div><h3>QR Code Generator</h3><p>Create and download a QR code.</p><button onclick="openTool('qr')">Open Tool</button></article>
+
+<section class="category"><h2 class="category-heading">🧰 Utility Tools</h2><div class="grid">
+<article class="card" data-name="qr code generator"><div class="emoji">🔳</div><h3>QR Code Generator</h3><p>Create and download a QR code for text or a website.</p><button onclick="openTool('qr')">Open Tool</button></article>
 <article class="card" data-name="percentage calculator"><div class="emoji">🧮</div><h3>Percentage Calculator</h3><p>Calculate a percentage of any number.</p><button onclick="openTool('percent')">Open Tool</button></article>
-<article class="card" data-name="age calculator"><div class="emoji">🎂</div><h3>Age Calculator</h3><p>Calculate your age from date of birth.</p><button onclick="openTool('age')">Open Tool</button></article>
+<article class="card" data-name="age calculator"><div class="emoji">🎂</div><h3>Age Calculator</h3><p>Calculate your age from your date of birth.</p><button onclick="openTool('age')">Open Tool</button></article>
 </div></section>
+
 <section id="toolPanel" class="panel"><div class="actions"><button class="secondary" onclick="closeTool()">← Back to tools</button></div><div id="toolContent"></div></section>
 <section id="about" class="section-title"><h2>About JWD Tools</h2><p>Our mission is to make useful online tools easy and accessible for everyone.</p></section>
 </main>
 <footer><h3>JWD Tools</h3><p>Free Online Tools for Everyone</p><p>© 2026 JWD Tools. All rights reserved.</p></footer>
+
 <script>
 if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}
-const panel=document.getElementById('toolPanel'),content=document.getElementById('toolContent');
-thumbnail:`<h2>📸 YouTube Thumbnail Downloader</h2>
-<p class="note">Paste a YouTube video link to get its thumbnail in HD quality.</p>
-<input id="youtubeUrl" type="text" placeholder="Paste YouTube video URL here">
-<div class="actions">
-<button class="primary" onclick="downloadThumbnail()">Get Thumbnail</button>
-</div>
-<div id="thumbnailResult" class="result"></div>`,
- merge:`<h2>📚 Merge PDF</h2><p>Select two or more PDF files to combine.</p><input id="mergeFiles" type="file" accept="application/pdf" multiple><button class="primary" onclick="mergePDF()">Merge and Download</button><p id="mergeStatus" class="note"></p>`,
- split:`<h2>✂️ Split PDF</h2><p class="note">This tool extracts the first page of a PDF.</p><input id="splitFile" type="file" accept="application/pdf"><button class="primary" onclick="splitPDF()">Extract First Page</button><p id="splitStatus" class="note"></p>`,
- compresspdf:`<h2>📦 Compress PDF</h2><p class="note">This reduces file size by converting each page to an image. Text selection/search and some vector detail will be lost. Best for scanned or image-based PDFs.</p><input id="compressFile" type="file" accept="application/pdf"><label>Image quality (lower = smaller file)</label><input id="compressQuality" type="range" min=".35" max=".85" step=".05" value=".6"><div id="qualityLabel" class="note">Quality: 60%</div><button class="primary" onclick="compressPDF()">Compress and Download</button><p id="compressStatus" class="note"></p>`,
- pdfword:`<h2>📝 PDF to Word</h2><p class="note">Extracts selectable text from a PDF and creates an editable DOCX file. Complex layouts, columns, images and scanned pages may not convert accurately; scanned PDFs need OCR.</p><input id="wordFile" type="file" accept="application/pdf"><button class="primary" onclick="pdfToWord()">Convert to Word (.docx)</button><p id="wordStatus" class="note"></p>`,
- image:`<h2>🗜️ Image Compressor</h2><p>Select an image. Compression happens in your browser.</p><input id="imageFile" type="file" accept="image/*"><label>Image quality</label><input id="imageQuality" type="range" min=".2" max=".95" step=".05" value=".7"><button class="primary" onclick="compressImage()">Compress and Download</button><p id="imageStatus" class="note"></p>`,
- resize:`<h2>📐 Image Resizer</h2><input id="resizeFile" type="file" accept="image/*"><label>Width (pixels)</label><input id="resizeWidth" type="number" value="800"><label>Height (pixels)</label><input id="resizeHeight" type="number" value="600"><button class="primary" onclick="resizeImage()">Resize and Download</button>`,
- imgpdf:`<h2>📷 Image to PDF</h2><input id="imgPdfFile" type="file" accept="image/jpeg,image/png"><button class="primary" onclick="imageToPDF()">Convert and Download PDF</button>`,
- counter:`<h2>🔢 Word Counter</h2><textarea id="countText" oninput="updateCount()" placeholder="Enter or paste your text..."></textarea><div class="result" id="countResult">Words: 0 | Characters: 0 | Sentences: 0</div>`,
- case:`<h2>🔠 Case Converter</h2><textarea id="caseText" placeholder="Enter your text..."></textarea><div class="actions"><button class="primary" onclick="convertCase('upper')">UPPERCASE</button><button class="primary" onclick="convertCase('lower')">lowercase</button><button class="primary" onclick="convertCase('title')">Title Case</button><button class="secondary" onclick="copyCase()">Copy Text</button></div>`,
- qr:`<h2>🔳 QR Code Generator</h2><input id="qrText" placeholder="Enter text or website URL"><button class="primary" onclick="makeQR()">Generate QR Code</button><div id="qrOutput"></div><button class="secondary" onclick="downloadQR()">Download QR Image</button>`,
- percent:`<h2>🧮 Percentage Calculator</h2><label>Percentage (%)</label><input id="percentValue" type="number" placeholder="e.g. 20"><label>Number</label><input id="percentNumber" type="number" placeholder="e.g. 500"><button class="primary" onclick="calculatePercent()">Calculate</button><div id="percentResult" class="result"></div>`,
- age:`<h2>🎂 Age Calculator</h2><label>Date of birth</label><input id="birthDate" type="date"><button class="primary" onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div>`
- };
- content.innerHTML=views[id]||'<p>Tool not found.</p>';panel.scrollIntoView({behavior:'smooth'});
- if(id==='tts')loadVoices();
- if(id==='compresspdf'){document.getElementById('compressQuality').addEventListener('input',e=>document.getElementById('qualityLabel').textContent='Quality: '+Math.round(Number(e.target.value)*100)+'%');}
-}
+const panel=document.getElementById('toolPanel');
+const content=document.getElementById('toolContent');
+const views={
+tts:`<h2>🗣️ Text to Speech</h2><p class="note">Enter text, choose an available voice and listen. Voices depend on your browser and device.</p><textarea id="ttsText" placeholder="Type or paste text here..."></textarea><label>Voice</label><select id="ttsVoice"></select><label>Speed</label><input id="ttsRate" type="range" min=".6" max="1.5" step=".1" value="1"><div class="actions"><button class="primary" onclick="speak()">▶ Speak</button><button class="secondary" onclick="speechSynthesis.cancel()">Stop</button></div>`,
+voice:`<h2>🎙️ Voice Changer</h2><p class="note">Upload an audio file and apply a simple effect. Processing happens in your browser.</p><input id="voiceFile" type="file" accept="audio/*"><label>Choose effect</label><select id="voiceEffect"><option value="deep">Deep voice</option><option value="high">High pitch</option><option value="robot">Robot effect</option><option value="echo">Echo effect</option><option value="normal">Normal speed</option></select><div class="actions"><button class="primary" onclick="changeVoice()">Apply Effect & Download WAV</button></div><p id="voiceStatus" class="note"></p>`,
+thumbnail:`<h2>📸 YouTube Thumbnail Downloader</h2><p class="note">Paste a YouTube video link to preview its thumbnail. Open the image, then save it from your browser.</p><input id="youtubeUrl" placeholder="Paste YouTube video URL here"><div class="actions"><button class="primary" onclick="downloadThumbnail()">Get Thumbnail</button></div><div id="thumbnailResult"></div>`,
+merge:`<h2>📚 Merge PDF</h2><p class="note">Select two or more PDF files to combine.</p><input id="mergeFiles" type="file" accept="application/pdf" multiple><button class="primary" onclick="mergePDF()">Merge and Download</button><p id="mergeStatus" class="note"></p>`,
+split:`<h2>✂️ Split PDF</h2><p class="note">This tool extracts the first page of a PDF.</p><input id="splitFile" type="file" accept="application/pdf"><button class="primary" onclick="splitPDF()">Extract First Page</button><p id="splitStatus" class="note"></p>`,
+compresspdf:`<h2>📦 Compress PDF</h2><p class="note">Converts PDF pages to images to reduce size. Text selection/search may be lost. Best for scanned or image-based PDFs.</p><input id="compressFile" type="file" accept="application/pdf"><label>Image quality (lower = smaller file)</label><input id="compressQuality" type="range" min=".35" max=".85" step=".05" value=".6"><div id="qualityLabel" class="note">Quality: 60%</div><button class="primary" onclick="compressPDF()">Compress and Download</button><p id="compressStatus" class="note"></p>`,
+pdfword:`<h2>📝 PDF to Word</h2><p class="note">Extracts selectable text from a PDF and creates an editable DOCX file. Complex layouts and scanned pages may not convert accurately; scanned PDFs need OCR.</p><input id="wordFile" type="file" accept="application/pdf"><button class="primary" onclick="pdfToWord()">Convert to Word (.docx)</button><p id="wordStatus" class="note"></p>`,
+image:`<h2>🗜️ Image Compressor</h2><input id="imageFile" type="file" accept="image/*"><label>Image quality</label><input id="imageQuality" type="range" min=".2" max=".95" step=".05" value=".7"><button class="primary" onclick="compressImage()">Compress and Download</button><p id="imageStatus" class="note"></p>`,
+resize:`<h2>📐 Image Resizer</h2><input id="resizeFile" type="file" accept="image/*"><label>Width (pixels)</label><input id="resizeWidth" type="number" value="800"><label>Height (pixels)</label><input id="resizeHeight" type="number" value="600"><button class="primary" onclick="resizeImage()">Resize and Download</button>`,
+imgpdf:`<h2>📷 Image to PDF</h2><input id="imgPdfFile" type="file" accept="image/jpeg,image/png"><button class="primary" onclick="imageToPDF()">Convert and Download PDF</button>`,
+counter:`<h2>🔢 Word Counter</h2><textarea id="countText" oninput="updateCount()" placeholder="Enter or paste your text..."></textarea><div class="result" id="countResult">Words: 0 | Characters: 0 | Sentences: 0</div>`,
+case:`<h2>🔠 Case Converter</h2><textarea id="caseText" placeholder="Enter your text..."></textarea><div class="actions"><button class="primary" onclick="convertCase('upper')">UPPERCASE</button><button class="primary" onclick="convertCase('lower')">lowercase</button><button class="primary" onclick="convertCase('title')">Title Case</button><button class="secondary" onclick="copyCase()">Copy Text</button></div>`,
+qr:`<h2>🔳 QR Code Generator</h2><input id="qrText" placeholder="Enter text or website URL"><button class="primary" onclick="makeQR()">Generate QR Code</button><div id="qrOutput"></div><button class="secondary" onclick="downloadQR()">Download QR Image</button>`,
+percent:`<h2>🧮 Percentage Calculator</h2><label>Percentage (%)</label><input id="percentValue" type="number" placeholder="e.g. 20"><label>Number</label><input id="percentNumber" type="number" placeholder="e.g. 500"><button class="primary" onclick="calculatePercent()">Calculate</button><div id="percentResult" class="result"></div>`,
+age:`<h2>🎂 Age Calculator</h2><label>Date of birth</label><input id="birthDate" type="date"><button class="primary" onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div>`
+};
+function openTool(id){content.innerHTML=views[id]||'<p>Tool not found.</p>';panel.classList.add('active');panel.scrollIntoView({behavior:'smooth',block:'start'});if(id==='tts')loadVoices();if(id==='compresspdf'){document.getElementById('compressQuality').addEventListener('input',e=>document.getElementById('qualityLabel').textContent='Quality: '+Math.round(Number(e.target.value)*100)+'%');}}
 function closeTool(){panel.classList.remove('active');}
-function searchTools(){const q=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.name.includes(q)?'':'none');document.querySelectorAll('.category').forEach(s=>s.style.display=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none')?'':'none');}
+function searchTools(){const q=document.getElementById('searchBox').value.toLowerCase().trim();document.querySelectorAll('.category').forEach(s=>{let found=false;s.querySelectorAll('.card').forEach(c=>{const match=(c.dataset.name||'').includes(q);c.style.display=match?'':'none';if(match)found=true;});s.style.display=found?'':'none';});}
 function loadVoices(){const s=document.getElementById('ttsVoice');function fill(){s.innerHTML='';if(!('speechSynthesis'in window))return;speechSynthesis.getVoices().forEach((v,i)=>{const o=document.createElement('option');o.value=i;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o);});}fill();if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=fill;}
 function speak(){const t=document.getElementById('ttsText').value.trim();if(!t)return alert('Please enter some text.');if(!('speechSynthesis'in window))return alert('Speech is not supported in this browser.');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t),v=speechSynthesis.getVoices()[Number(document.getElementById('ttsVoice').value)];if(v)u.voice=v;u.rate=Number(document.getElementById('ttsRate').value);speechSynthesis.speak(u);}
 function updateCount(){const t=document.getElementById('countText').value,w=t.trim()?t.trim().split(/\s+/).length:0,s=t.trim()?t.trim().split(/[.!?]+/).filter(x=>x.trim()).length:0;document.getElementById('countResult').textContent=`Words: ${w} | Characters: ${t.length} | Sentences: ${s}`;}
@@ -121,60 +127,20 @@ function convertCase(type){const el=document.getElementById('caseText');let t=el
 function copyCase(){navigator.clipboard.writeText(document.getElementById('caseText').value).then(()=>alert('Text copied!')).catch(()=>alert('Copy is not available in this browser.'));}
 function makeQR(){const t=document.getElementById('qrText').value.trim();if(!t)return alert('Enter text or a URL first.');const out=document.getElementById('qrOutput');out.innerHTML='';if(!window.QRCode)return alert('QR library did not load. Check your internet connection.');new QRCode(out,{text:t,width:220,height:220});}
 function downloadQR(){const img=document.querySelector('#qrOutput img'),canvas=document.querySelector('#qrOutput canvas'),url=img?img.src:(canvas?canvas.toDataURL('image/png'):null);if(!url)return alert('Generate a QR code first.');const a=document.createElement('a');a.href=url;a.download='jwd-qr-code.png';a.click();}
+function saveBlob(data,name,type){const blob=data instanceof Blob?data:new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
 async function mergePDF(){const fs=[...document.getElementById('mergeFiles').files];if(fs.length<2)return alert('Choose at least two PDF files.');try{const out=await PDFLib.PDFDocument.create();for(const f of fs){const d=await PDFLib.PDFDocument.load(await f.arrayBuffer()),pages=await out.copyPages(d,d.getPageIndices());pages.forEach(p=>out.addPage(p));}saveBlob(await out.save(),'merged.pdf','application/pdf');document.getElementById('mergeStatus').textContent='Merged PDF downloaded.';}catch(e){alert('Could not merge these files. Check that they are valid and not password protected.');}}
 async function splitPDF(){const f=document.getElementById('splitFile').files[0];if(!f)return alert('Choose a PDF file.');try{const src=await PDFLib.PDFDocument.load(await f.arrayBuffer());if(!src.getPageCount())return alert('This PDF has no pages.');const out=await PDFLib.PDFDocument.create(),[p]=await out.copyPages(src,[0]);out.addPage(p);saveBlob(await out.save(),'first-page.pdf','application/pdf');document.getElementById('splitStatus').textContent='First page downloaded.';}catch(e){alert('Could not read this PDF.');}}
 async function compressPDF(){const f=document.getElementById('compressFile').files[0],status=document.getElementById('compressStatus');if(!f)return alert('Choose a PDF file.');if(!window.pdfjsLib||!window.PDFLib)return alert('PDF libraries did not load. Refresh the page and try again.');status.textContent='Compressing... Please wait. Large PDFs may take time.';try{const data=await f.arrayBuffer(),pdf=await pdfjsLib.getDocument({data:new Uint8Array(data)}).promise,out=await PDFLib.PDFDocument.create(),q=Number(document.getElementById('compressQuality').value);for(let n=1;n<=pdf.numPages;n++){status.textContent=`Processing page ${n} of ${pdf.numPages}...`;const page=await pdf.getPage(n),viewport=page.getViewport({scale:1.25}),canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',q));if(!blob)throw Error('Could not render page');const jpg=await out.embedJpg(await blob.arrayBuffer()),p=out.addPage([viewport.width,viewport.height]);p.drawImage(jpg,{x:0,y:0,width:viewport.width,height:viewport.height});canvas.width=canvas.height=1;}const bytes=await out.save();saveBlob(bytes,'compressed.pdf','application/pdf');status.textContent=`Done. Original: ${(f.size/1024/1024).toFixed(2)} MB. New: ${(bytes.length/1024/1024).toFixed(2)} MB. This image-based PDF may not contain selectable text.`;}catch(e){console.error(e);status.textContent='Compression failed. This PDF may be encrypted, damaged, or too large for this device.';}}
 async function pdfToWord(){const f=document.getElementById('wordFile').files[0],status=document.getElementById('wordStatus');if(!f)return alert('Choose a PDF file.');if(!window.pdfjsLib||!window.docx)return alert('PDF/Word libraries did not load. Refresh and try again.');status.textContent='Extracting text...';try{const pdf=await pdfjsLib.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise,paras=[];for(let n=1;n<=pdf.numPages;n++){status.textContent=`Reading page ${n} of ${pdf.numPages}...`;const page=await pdf.getPage(n),tc=await page.getTextContent(),txt=tc.items.map(x=>x.str).join(' ');paras.push(new docx.Paragraph({children:[new docx.TextRun(txt||' ')]}));}const doc=new docx.Document({sections:[{children:paras}]});const blob=await docx.Packer.toBlob(doc);saveBlob(blob,'converted-document.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document');status.textContent='Word document downloaded. Layout and images may differ from the original PDF.';}catch(e){console.error(e);status.textContent='Conversion failed. Scanned PDFs need OCR and cannot be converted by text extraction.';}}
-function saveBlob(data,name,type){const blob=data instanceof Blob?data:new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
 function loadImage(file){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=URL.createObjectURL(file);});}
 async function compressImage(){const f=document.getElementById('imageFile').files[0];if(!f)return alert('Choose an image.');try{const im=await loadImage(f),c=document.createElement('canvas');c.width=im.width;c.height=im.height;c.getContext('2d').drawImage(im,0,0);c.toBlob(b=>{if(!b)return alert('Could not compress image.');saveBlob(b,'jwd-compressed.jpg','image/jpeg');document.getElementById('imageStatus').textContent=`Original: ${(f.size/1024).toFixed(1)} KB. Compressed: ${(b.size/1024).toFixed(1)} KB.`;},'image/jpeg',Number(document.getElementById('imageQuality').value));}catch(e){alert('Could not open this image.');}}
-async function resizeImage(){const f=document.getElementById('resizeFile').files[0];if(!f)return alert('Choose an image.');const w=Number(document.getElementById('resizeWidth').value),h=Number(document.getElementById('resizeHeight').value);if(w<1||h<1||w>8000||h>8000)return alert('Enter dimensions between 1 and 8000.');try{const im=await loadImage(f),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);c.toBlob(b=>{if(b)saveBlob(b,'jwd-resized.jpg','image/jpeg');},'image/jpeg',.9);}catch(e){alert('Could not resize image.');}}
+async function resizeImage(){const f=document.getElementById('resizeFile').files[0];if(!f)return alert('Choose an image.');const w=Number(document.getElementById('resizeWidth').value),h=Number(document.getElementById('resizeHeight').value);if(w<1||h<1||w>8000||h>8000)return alert('Enter dimensions between 1 and 8000.');try{const im=await loadImage(f),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);c.toBlob(b=>{if(b)saveBlob(b,'jwd-resized.jpg','image/jpeg');},'image/jpeg',.9);}catch(e){alert('Could not resize this image.');}}
 async function imageToPDF(){const f=document.getElementById('imgPdfFile').files[0];if(!f)return alert('Choose an image.');try{const bytes=await f.arrayBuffer(),pdf=await PDFLib.PDFDocument.create(),im=f.type==='image/png'?await pdf.embedPng(bytes):await pdf.embedJpg(bytes),p=pdf.addPage([im.width,im.height]);p.drawImage(im,{x:0,y:0,width:im.width,height:im.height});saveBlob(await pdf.save(),'image-to-pdf.pdf','application/pdf');}catch(e){alert('Please choose a JPG or PNG image.');}}
-async function changeVoice(){const f=document.getElementById('voiceFile').files[0],status=document.getElementById('voiceStatus');if(!f)return alert('Choose an audio file.');const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return alert('Audio processing is not supported in this browser.');status.textContent='Processing audio...';try{const ctx=new AC(),buffer=await ctx.decodeAudioData(await f.arrayBuffer()),effect=document.getElementById('voiceEffect').value,rate=effect==='deep'?.78:effect==='high'?1.28:1,offline=new OfflineAudioContext(buffer.numberOfChannels,Math.ceil(buffer.length/rate),buffer.sampleRate),src=offline.createBufferSource();src.buffer=buffer;src.playbackRate.value=rate;let node=src;if(effect==='robot'){const osc=offline.createOscillator(),gain=offline.createGain();osc.frequency.value=35;osc.connect(gain.gain);gain.gain.value=0.5;node.connect(gain);node=gain;osc.start();}if(effect==='echo'){const delay=offline.createDelay(1),feedback=offline.createGain();delay.delayTime.value=.22;feedback.gain.value=.28;node.connect(delay);delay.connect(feedback);feedback.connect(delay);node=delay;}if(effect==='deep'||effect==='high'){const filter=offline.createBiquadFilter();filter.type=effect==='deep'?'lowpass':'highpass';filter.frequency.value=effect==='deep'?1500:900;node.connect(filter);node=filter;}node.connect(offline.destination);src.start();const rendered=await offline.startRendering(),wav=audioBufferToWav(rendered);saveBlob(wav,'jwd-voice-effect.wav','audio/wav');status.textContent='Done. Your processed WAV file has downloaded.';await ctx.close();}catch(e){console.error(e);status.textContent='Could not process this audio file. Try a common MP3 or WAV file.';}}
+async function changeVoice(){const f=document.getElementById('voiceFile').files[0],status=document.getElementById('voiceStatus');if(!f)return alert('Choose an audio file.');const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return alert('Audio processing is not supported in this browser.');status.textContent='Processing audio...';try{const ctx=new AC(),buffer=await ctx.decodeAudioData(await f.arrayBuffer()),effect=document.getElementById('voiceEffect').value,rate=effect==='deep'?.78:effect==='high'?1.28:1,offline=new OfflineAudioContext(buffer.numberOfChannels,Math.ceil(buffer.length/rate),buffer.sampleRate),src=offline.createBufferSource();src.buffer=buffer;src.playbackRate.value=rate;let node=src;if(effect==='robot'){const osc=offline.createOscillator(),gain=offline.createGain();osc.frequency.value=35;osc.connect(gain.gain);gain.gain.value=.5;node.connect(gain);node=gain;osc.start();}if(effect==='echo'){const delay=offline.createDelay(1),feedback=offline.createGain();delay.delayTime.value=.22;feedback.gain.value=.28;node.connect(delay);delay.connect(feedback);feedback.connect(delay);node=delay;}if(effect==='deep'||effect==='high'){const filter=offline.createBiquadFilter();filter.type=effect==='deep'?'lowpass':'highpass';filter.frequency.value=effect==='deep'?1500:900;node.connect(filter);node=filter;}node.connect(offline.destination);src.start();const rendered=await offline.startRendering(),wav=audioBufferToWav(rendered);saveBlob(wav,'jwd-voice-effect.wav','audio/wav');status.textContent='Done. Your processed WAV file has downloaded.';await ctx.close();}catch(e){console.error(e);status.textContent='Could not process this audio file. Try a common MP3 or WAV file.';}}
 function audioBufferToWav(buffer){const channels=buffer.numberOfChannels,samples=buffer.length,bytes=44+samples*channels*2,ab=new ArrayBuffer(bytes),v=new DataView(ab);function s(o,t){for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i));}s(0,'RIFF');v.setUint32(4,bytes-8,true);s(8,'WAVE');s(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,channels,true);v.setUint32(24,buffer.sampleRate,true);v.setUint32(28,buffer.sampleRate*channels*2,true);v.setUint16(32,channels*2,true);v.setUint16(34,16,true);s(36,'data');v.setUint32(40,bytes-44,true);let o=44;for(let i=0;i<samples;i++)for(let c=0;c<channels;c++){let x=Math.max(-1,Math.min(1,buffer.getChannelData(c)[i]));v.setInt16(o,x<0?x*32768:x*32767,true);o+=2;}return ab;}
 function calculatePercent(){const p=Number(document.getElementById('percentValue').value),n=Number(document.getElementById('percentNumber').value);if(document.getElementById('percentValue').value===''||document.getElementById('percentNumber').value==='')return alert('Enter both numbers.');document.getElementById('percentResult').textContent=`Result: ${(p*n/100).toFixed(2)}`;}
 function calculateAge(){const val=document.getElementById('birthDate').value;if(!val)return alert('Choose your date of birth.');const d=new Date(val+'T00:00:00');if(isNaN(d.getTime())||d>new Date())return alert('Enter a valid date of birth.');const now=new Date();let y=now.getFullYear()-d.getFullYear(),m=now.getMonth()-d.getMonth(),days=now.getDate()-d.getDate();if(days<0){m--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}if(m<0){y--;m+=12;}document.getElementById('ageResult').textContent=`Age: ${y} years, ${m} months and ${days} days.`;}
-function downloadThumbnail() {
-  const url = document.getElementById("youtubeUrl").value.trim();
-  const result = document.getElementById("thumbnailResult");
-
-  let videoId = "";
-
-  try {
-    const parsed = new URL(url);
-
-    if (parsed.hostname.includes("youtu.be")) {
-      videoId = parsed.pathname.slice(1);
-    } else if (parsed.hostname.includes("youtube.com")) {
-      videoId = parsed.searchParams.get("v") || "";
-
-      if (!videoId && parsed.pathname.startsWith("/shorts/")) {
-        videoId = parsed.pathname.split("/")[2] || "";
-      }
-    }
-  } catch (e) {
-    result.textContent = "Please enter a valid YouTube URL.";
-    return;
-  }
-
-  if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
-    result.textContent = "Invalid YouTube video link. Please try again.";
-    return;
-  }
-
-  const imageUrl = "https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
-
-  result.innerHTML = `
-    <img src="${imageUrl}" alt="YouTube Thumbnail"
-    style="width:100%;max-width:500px;border-radius:12px;margin-top:15px"
-    onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'">
-    <div class="actions">
-      <a href="${imageUrl}" target="_blank" rel="noopener">
-        <button class="primary">Open HD Thumbnail</button>
-      </a>
-    </div>
-  `;
-}
+function downloadThumbnail(){const raw=document.getElementById('youtubeUrl').value.trim(),result=document.getElementById('thumbnailResult');let id='';try{const u=new URL(raw);if(u.hostname==='youtu.be'||u.hostname.endsWith('.youtu.be'))id=u.pathname.split('/')[1]||'';else if(u.hostname.includes('youtube.com')){id=u.searchParams.get('v')||'';if(!id&&u.pathname.startsWith('/shorts/'))id=u.pathname.split('/')[2]||'';if(!id&&u.pathname.startsWith('/embed/'))id=u.pathname.split('/')[2]||'';}}catch(e){result.textContent='Please enter a valid YouTube URL.';return;}if(!/^[a-zA-Z0-9_-]{11}$/.test(id)){result.textContent='Invalid YouTube video link. Please try again.';return;}const high=`https://img.youtube.com/vi/${id}/maxresdefault.jpg`,standard=`https://img.youtube.com/vi/${id}/hqdefault.jpg`;result.innerHTML=`<img id="ytThumb" src="${high}" alt="YouTube thumbnail" style="display:block;width:100%;max-width:560px;border-radius:12px;margin:15px 0" onerror="this.onerror=null;this.src='${standard}';document.getElementById('ytOpen').href='${standard}'"><div class="actions"><a id="ytOpen" href="${high}" target="_blank" rel="noopener"><button class="primary">Open Thumbnail Image</button></a></div><p class="note">Tip: Open the image, then right-click and choose “Save image as”.</p>`;}
 </script>
 </body>
 </html>
