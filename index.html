@@ -64,7 +64,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </div></section>
 
 <section class="category"><h2 class="category-heading">📸 YouTube Tools</h2><div class="grid">
-<article class="card" data-name="youtube thumbnail downloader"><div class="emoji">📸</div><h3>YouTube Thumbnail Downloader</h3><p>Preview and open a YouTube video's thumbnail in HD quality.</p><button onclick="openTool('thumbnail')">Open Tool</button></article>
+<article class="card" data-name="youtube thumbnail maker creator design"><div class="emoji">🎨</div><h3>YouTube Thumbnail Maker</h3><p>Create your own eye-catching YouTube thumbnail with a photo and custom text.</p><button onclick="openTool('thumbnail')">Create Thumbnail</button></article>
 </div></section>
 
 <section class="category"><h2 class="category-heading">📄 PDF Tools</h2><div class="grid">
@@ -103,7 +103,7 @@ const content=document.getElementById('toolContent');
 const views={
 tts:`<h2>🗣️ Text to Speech</h2><p class="note">Enter text, choose an available voice and listen. Voices depend on your browser and device.</p><textarea id="ttsText" placeholder="Type or paste text here..."></textarea><label>Voice</label><select id="ttsVoice"></select><label>Speed</label><input id="ttsRate" type="range" min=".6" max="1.5" step=".1" value="1"><div class="actions"><button class="primary" onclick="speak()">▶ Speak</button><button class="secondary" onclick="speechSynthesis.cancel()">Stop</button></div>`,
 voice:`<h2>🎙️ Voice Changer</h2><p class="note">Upload an audio file and apply a simple effect. Processing happens in your browser.</p><input id="voiceFile" type="file" accept="audio/*"><label>Choose effect</label><select id="voiceEffect"><option value="deep">Deep voice</option><option value="high">High pitch</option><option value="robot">Robot effect</option><option value="echo">Echo effect</option><option value="normal">Normal speed</option></select><div class="actions"><button class="primary" onclick="changeVoice()">Apply Effect & Download WAV</button></div><p id="voiceStatus" class="note"></p>`,
-thumbnail:`<h2>📸 YouTube Thumbnail Downloader</h2><p class="note">Paste a YouTube video link to preview its thumbnail. Open the image, then save it from your browser.</p><input id="youtubeUrl" placeholder="Paste YouTube video URL here"><div class="actions"><button class="primary" onclick="downloadThumbnail()">Get Thumbnail</button></div><div id="thumbnailResult"></div>`,
+thumbnail:`<h2>🎨 YouTube Thumbnail Maker</h2><p class="note">Upload your own photo, add a title and create a custom 1280 × 720 YouTube thumbnail. Your image stays in your browser.</p><label>1. Upload your photo</label><input id="makerPhoto" type="file" accept="image/*"><label>2. Thumbnail title</label><input id="makerTitle" maxlength="55" placeholder="e.g. AMAZING NEW VIDEO!"><label>3. Small subtitle (optional)</label><input id="makerSubtitle" maxlength="70" placeholder="e.g. You won't believe this!"><label>4. Text colour</label><select id="makerColor"><option value="#ffffff">White</option><option value="#ffe600">Yellow</option><option value="#ff4545">Red</option><option value="#55e6ff">Sky blue</option></select><div class="actions"><button class="primary" onclick="makeThumbnail()">Create Thumbnail</button><button class="secondary" onclick="downloadMadeThumbnail()">Download PNG</button></div><canvas id="makerCanvas" width="1280" height="720" style="display:block;width:100%;max-width:720px;height:auto;border-radius:12px;background:linear-gradient(135deg,#183b91,#7b35c9);margin-top:16px"></canvas><p id="makerStatus" class="note">Upload a photo and add your title, then press Create Thumbnail.</p>`,
 merge:`<h2>📚 Merge PDF</h2><p class="note">Select two or more PDF files to combine.</p><input id="mergeFiles" type="file" accept="application/pdf" multiple><button class="primary" onclick="mergePDF()">Merge and Download</button><p id="mergeStatus" class="note"></p>`,
 split:`<h2>✂️ Split PDF</h2><p class="note">This tool extracts the first page of a PDF.</p><input id="splitFile" type="file" accept="application/pdf"><button class="primary" onclick="splitPDF()">Extract First Page</button><p id="splitStatus" class="note"></p>`,
 compresspdf:`<h2>📦 Compress PDF</h2><p class="note">Converts PDF pages to images to reduce size. Text selection/search may be lost. Best for scanned or image-based PDFs.</p><input id="compressFile" type="file" accept="application/pdf"><label>Image quality (lower = smaller file)</label><input id="compressQuality" type="range" min=".35" max=".85" step=".05" value=".6"><div id="qualityLabel" class="note">Quality: 60%</div><button class="primary" onclick="compressPDF()">Compress and Download</button><p id="compressStatus" class="note"></p>`,
@@ -140,7 +140,61 @@ async function changeVoice(){const f=document.getElementById('voiceFile').files[
 function audioBufferToWav(buffer){const channels=buffer.numberOfChannels,samples=buffer.length,bytes=44+samples*channels*2,ab=new ArrayBuffer(bytes),v=new DataView(ab);function s(o,t){for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i));}s(0,'RIFF');v.setUint32(4,bytes-8,true);s(8,'WAVE');s(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,channels,true);v.setUint32(24,buffer.sampleRate,true);v.setUint32(28,buffer.sampleRate*channels*2,true);v.setUint16(32,channels*2,true);v.setUint16(34,16,true);s(36,'data');v.setUint32(40,bytes-44,true);let o=44;for(let i=0;i<samples;i++)for(let c=0;c<channels;c++){let x=Math.max(-1,Math.min(1,buffer.getChannelData(c)[i]));v.setInt16(o,x<0?x*32768:x*32767,true);o+=2;}return ab;}
 function calculatePercent(){const p=Number(document.getElementById('percentValue').value),n=Number(document.getElementById('percentNumber').value);if(document.getElementById('percentValue').value===''||document.getElementById('percentNumber').value==='')return alert('Enter both numbers.');document.getElementById('percentResult').textContent=`Result: ${(p*n/100).toFixed(2)}`;}
 function calculateAge(){const val=document.getElementById('birthDate').value;if(!val)return alert('Choose your date of birth.');const d=new Date(val+'T00:00:00');if(isNaN(d.getTime())||d>new Date())return alert('Enter a valid date of birth.');const now=new Date();let y=now.getFullYear()-d.getFullYear(),m=now.getMonth()-d.getMonth(),days=now.getDate()-d.getDate();if(days<0){m--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}if(m<0){y--;m+=12;}document.getElementById('ageResult').textContent=`Age: ${y} years, ${m} months and ${days} days.`;}
-function downloadThumbnail(){const raw=document.getElementById('youtubeUrl').value.trim(),result=document.getElementById('thumbnailResult');let id='';try{const u=new URL(raw);if(u.hostname==='youtu.be'||u.hostname.endsWith('.youtu.be'))id=u.pathname.split('/')[1]||'';else if(u.hostname.includes('youtube.com')){id=u.searchParams.get('v')||'';if(!id&&u.pathname.startsWith('/shorts/'))id=u.pathname.split('/')[2]||'';if(!id&&u.pathname.startsWith('/embed/'))id=u.pathname.split('/')[2]||'';}}catch(e){result.textContent='Please enter a valid YouTube URL.';return;}if(!/^[a-zA-Z0-9_-]{11}$/.test(id)){result.textContent='Invalid YouTube video link. Please try again.';return;}const high=`https://img.youtube.com/vi/${id}/maxresdefault.jpg`,standard=`https://img.youtube.com/vi/${id}/hqdefault.jpg`;result.innerHTML=`<img id="ytThumb" src="${high}" alt="YouTube thumbnail" style="display:block;width:100%;max-width:560px;border-radius:12px;margin:15px 0" onerror="this.onerror=null;this.src='${standard}';document.getElementById('ytOpen').href='${standard}'"><div class="actions"><a id="ytOpen" href="${high}" target="_blank" rel="noopener"><button class="primary">Open Thumbnail Image</button></a></div><p class="note">Tip: Open the image, then right-click and choose “Save image as”.</p>`;}
+
+let makerImage=null;
+function makeThumbnail(){
+ const file=document.getElementById('makerPhoto').files[0];
+ const title=document.getElementById('makerTitle').value.trim()||'YOUR VIDEO TITLE';
+ const subtitle=document.getElementById('makerSubtitle').value.trim();
+ const color=document.getElementById('makerColor').value;
+ const canvas=document.getElementById('makerCanvas');
+ const ctx=canvas.getContext('2d');
+ const status=document.getElementById('makerStatus');
+ const draw=()=>{
+   const w=canvas.width,h=canvas.height;
+   if(makerImage){
+     const scale=Math.max(w/makerImage.width,h/makerImage.height);
+     const sw=w/scale,sh=h/scale,sx=(makerImage.width-sw)/2,sy=(makerImage.height-sh)/2;
+     ctx.drawImage(makerImage,sx,sy,sw,sh,0,0,w,h);
+   }else{
+     const grad=ctx.createLinearGradient(0,0,w,h);
+     grad.addColorStop(0,'#123b8b');grad.addColorStop(1,'#792bd1');
+     ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+   }
+   const shade=ctx.createLinearGradient(0,0,w,0);
+   shade.addColorStop(0,'rgba(0,0,0,.82)');shade.addColorStop(.68,'rgba(0,0,0,.22)');shade.addColorStop(1,'rgba(0,0,0,.08)');
+   ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);
+   ctx.fillStyle='#ffdf26';ctx.fillRect(64,76,12,560);
+   ctx.textAlign='left';ctx.textBaseline='middle';
+   let size=title.length>34?76:title.length>24?92:112;
+   ctx.font='900 '+size+'px Arial, sans-serif';
+   ctx.fillStyle=color;
+   const words=title.toUpperCase().split(/\s+/);let lines=[],line='';
+   for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>900&&line){lines.push(line);line=word;}else line=test;}
+   if(line)lines.push(line);
+   lines=lines.slice(0,3);
+   const lineHeight=size*1.12;
+   const total=lines.length*lineHeight+(subtitle?70:0);
+   let y=Math.max(140,(h-total)/2+lineHeight/2);
+   ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=12;ctx.shadowOffsetX=3;ctx.shadowOffsetY=5;
+   lines.forEach(t=>{ctx.fillText(t,110,y,990);y+=lineHeight;});
+   ctx.shadowBlur=0;ctx.shadowOffsetX=0;ctx.shadowOffsetY=0;
+   if(subtitle){ctx.font='700 42px Arial, sans-serif';ctx.fillStyle='#ffffff';ctx.fillText(subtitle,112,Math.min(640,y+12),990);}
+   ctx.fillStyle='#ffdf26';ctx.font='900 25px Arial, sans-serif';ctx.fillText('JWD CREATOR',110,665);
+   status.textContent='Your thumbnail is ready! Click Download PNG to save it.';
+ };
+ if(file){
+   const reader=new FileReader();
+   reader.onload=()=>{const img=new Image();img.onload=()=>{makerImage=img;draw();};img.onerror=()=>{status.textContent='Could not load this photo. Please try another image.';};img.src=reader.result;};
+   reader.readAsDataURL(file);
+ }else{makerImage=null;draw();status.textContent='Created a thumbnail with a sample background. Upload your own photo for a personal design.';}
+}
+function downloadMadeThumbnail(){
+ const canvas=document.getElementById('makerCanvas');
+ if(!canvas)return;
+ const a=document.createElement('a');a.download='jwd-youtube-thumbnail.png';a.href=canvas.toDataURL('image/png');a.click();
+}
+
 </script>
 </body>
 </html>
