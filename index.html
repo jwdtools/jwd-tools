@@ -166,11 +166,15 @@ async function createVoiceClone() {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.detail || data.error || "Voice cloning failed.");
+      const errorMessage = typeof data.detail === "string"
+        ? data.detail
+        : JSON.stringify(data.detail || data.error || data);
+      throw new Error(errorMessage);
     }
 
     status.textContent = "Your voice clone has been created!";
     resultBox.textContent = "Voice ID: " + data.voice_id;
+
   } catch (error) {
     status.textContent = "Error: " + error.message;
   }
