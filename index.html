@@ -158,7 +158,7 @@ async function createVoiceClone() {
   formData.append("name", name);
 
   try {
-    const response = await fetch("https://jwd-voice-api.jwdnewsofficial.workers.dev/clone", {
+    const response = await fetch("https://jwd-voice-backend.jwdnewsofficial.workers.dev/clone", {
       method: "POST",
       body: formData
     });
